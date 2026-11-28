@@ -21,7 +21,7 @@ from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import h5py
-import imagehash  # ty: ignore[unresolved-import]
+import imagehash  # ty: ignore[import-not-found]
 import numpy as np
 import pandas as pd
 import timm
