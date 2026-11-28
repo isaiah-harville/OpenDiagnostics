@@ -1,0 +1,55 @@
+benchmark: PU2756, official five-fold cross-validation (five_fold_split.xlsx)
+protocol: >-
+  Benign vs malignant, one B-mode image per patient. Each official fold tests on its own
+  551 or 552 patients and trains on the other 2,204 or 2,205. The dataset paper reports
+  mean ± SD and does not say over what; with five-fold CV it is presumably over the five
+  test folds. The paper names no validation set: its deep models ran a fixed 100 epochs
+  (Adam, lr 1e-4, batch 128), and XGBoost was tuned by an inner 10-fold CV on each fold's
+  training patients. To compare, train all five folds and pool or average the five test
+  AUROCs; one fold alone is not the published protocol. auroc_sd and accuracy_sd are the SDs
+  the source reports. Supplementary Table 1 is titled "Segmentation results" but holds the
+  classification results; the main text quotes its best rows.
+baselines:
+  - method: ConvNeXt-Tiny
+    metrics: {auroc: 0.6950, accuracy: 0.6785, auroc_sd: 0.0272, accuracy_sd: 0.0176}
+    source: Jiang et al., Sci Data 13:1711 (2026), Supplementary Table 1 and main text
+    url: https://doi.org/10.1038/s41597-026-07715-0
+  - method: Swin Transformer
+    metrics: {auroc: 0.6737, accuracy: 0.6629, auroc_sd: 0.0139, accuracy_sd: 0.0097}
+    source: Jiang et al., Sci Data 13:1711 (2026), Supplementary Table 1
+    url: https://doi.org/10.1038/s41597-026-07715-0
+  - method: ResNet18
+    metrics: {auroc: 0.6732, accuracy: 0.6538, auroc_sd: 0.0145, accuracy_sd: 0.0178}
+    source: Jiang et al., Sci Data 13:1711 (2026), Supplementary Table 1
+    url: https://doi.org/10.1038/s41597-026-07715-0
+  - method: DenseNet121
+    metrics: {auroc: 0.6723, accuracy: 0.6589, auroc_sd: 0.0144, accuracy_sd: 0.0158}
+    source: Jiang et al., Sci Data 13:1711 (2026), Supplementary Table 1
+    url: https://doi.org/10.1038/s41597-026-07715-0
+  - method: Radiomics + autoencoder + XGBoost, predicted mask, bounding box
+    metrics: {auroc: 0.6661, accuracy: 0.6466, auroc_sd: 0.0369, accuracy_sd: 0.0155}
+    source: Jiang et al., Sci Data 13:1711 (2026), Supplementary Table 1 and main text
+    url: https://doi.org/10.1038/s41597-026-07715-0
+    notes: Needs a lesion mask from a segmentation model; the best of the non-deep methods.
+  - method: Vision Transformer
+    metrics: {auroc: 0.6561, accuracy: 0.6557, auroc_sd: 0.0163, accuracy_sd: 0.0127}
+    source: Jiang et al., Sci Data 13:1711 (2026), Supplementary Table 1
+    url: https://doi.org/10.1038/s41597-026-07715-0
+  - method: Radiomics + XGBoost, expert mask
+    metrics: {auroc: 0.6494, accuracy: 0.6441, auroc_sd: 0.0169, accuracy_sd: 0.0159}
+    source: Jiang et al., Sci Data 13:1711 (2026), Supplementary Table 1
+    url: https://doi.org/10.1038/s41597-026-07715-0
+    notes: >-
+      Supplementary Table 1 lists eleven more radiomics and autoencoder variants, AUROC 0.604
+      to 0.659.
+  - method: SEED-Net, trained from scratch
+    metrics: {accuracy: 0.6054, macro_f1: 0.5785, accuracy_sd: 0.0086, macro_f1_sd: 0.0229}
+    source: Liu and Li, Front Med 13:1942733 (2026), Table 3
+    url: https://doi.org/10.3389/fmed.2026.1942733
+    notes: >-
+      Different protocol. One train/val/test split, 1,763/441/552 images with 640/1123,
+      160/281 and 201/351 benign/malignant. These are the counts of official fold 1 with a
+      stratified 80/20 validation carve, as in our fold0 column, but the paper does not say
+      which patients it used. Mean ± SD over five seeds on that one test set, not over folds.
+      UI borders cropped, random initialisation, best epoch by validation macro F1. No AUROC
+      is reported.

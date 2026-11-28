@@ -50,6 +50,9 @@ The `*mnist-convnext` projects cover the twelve MedMNIST 2D subsets at 224 px, a
 `nih-chestxray14-convnext`, `kermany-oct-convnext` and `kermany-cxr-convnext` train on the
 full-resolution source images at 448 px; download each dataset first with the script named
 at the top of its config. None of the three has a published run yet.
+`pu2756-convnext` trains on PU2756 lung ultrasound under its official five-fold
+cross-validation, one fold per run (`--data.init_args.split_column=foldN`); it has no
+published run yet.
 The `*-dynunet` projects segment KiTS23, the ten Medical Segmentation Decathlon tasks,
 TotalSegmentator, ACDC and PI-CAI. Download each dataset first with its script in
 `scripts/datasets/`, which writes the manifest the config reads; none has a published run.

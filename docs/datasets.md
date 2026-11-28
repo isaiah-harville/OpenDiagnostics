@@ -182,6 +182,12 @@ format, and sources.
 | [RSNA Screening Mammography](datasets/other-modalities.md#rsna-screening-mammography-breast-cancer-detection-rsna-smbc-202223) | breast-level cls | ≈54,700 files | yes | Kaggle rules, non-commercial; RSNA MIRA agreement | registration |
 | [CMMD](datasets/other-modalities.md#cmmd-the-chinese-mammography-database) | benign/malignant cls | 1,775 patients | yes | CC BY 4.0 | open |
 
+#### Ultrasound
+
+| Dataset | Task | Size | Patient IDs | License | Access |
+|---|---|---|---|---|---|
+| [PU2756](datasets/other-modalities.md#pu2756-pulmonary-ultrasound) | benign/malignant cls, seg | 2,756 images / 2,756 patients | yes, one image each | CC BY 4.0 | open |
+
 ## The bar to beat
 
 The published results a new model has to beat on each shortlisted benchmark, under that
@@ -200,6 +206,7 @@ numbers incomparable.
 | CBIS-DDSM, official split | two-view AUROC | 0.8643 (0.8658 with test-time augmentation) | arXiv 2503.19945 | yes |
 | LUNA16, 10-fold CV | CPM | 0.951 to 0.952 | PAtech; Liu et al. 2019 | yes, self-reported CV |
 | Kermany OCT, 1,000-image test | accuracy | 99.80% | OpticNet-71 | yes |
+| PU2756, official 5-fold CV | mean test AUROC | 0.6950 ± 0.0272 | ConvNeXt-Tiny (dataset paper) | yes |
 
 A benchmark whose test labels are public invites test-set tuning, so a win there counts
 only with selection on validation, means over seeds, and the code to rerun it.

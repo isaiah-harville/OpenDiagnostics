@@ -1,0 +1,99 @@
+# The dermamnist-c-convnext recipe on PU2756 lung tumour ultrasound, one official fold.
+# Prepare the data once: uv run python scripts/datasets/pu2756.py data/pu2756
+#   for k in 0 1 2 3 4; do
+#     uv run opendiagnostics fit -c models/pu2756-convnext/config.yaml \
+#       --name=pu2756-convnext-fold$k --data.init_args.split_column=fold$k
+#   done
+# Fold k tests on official fold k+1's test sheet and selects the checkpoint on 20% of that
+# fold's training patients. The published numbers are means over the five test folds.
+name: pu2756-convnext
+notes: >-
+  ConvNeXt-S at 224 px on official fold 1 of PU2756 (column fold0). Validation is 20% of the
+  fold's training patients, stratified by label. Grayscale input, horizontal flips only:
+  the probe is always at the top, so a vertical flip makes an image a scanner never shows.
+seed_everything: 0
+trainer:
+  accelerator: auto
+  precision: bf16-mixed
+  deterministic: warn
+  max_epochs: 40
+  log_every_n_steps: 10
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.EMAWeightAveraging
+    init_args:
+      decay: 0.99107
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch
+model:
+  class_path: opendiagnostics.modules.ImageClassifier
+  init_args:
+    network:
+      class_path: timm.create_model
+      init_args:
+        model_name: convnext_small.fb_in22k_ft_in1k
+        pretrained: true
+      dict_kwargs:
+        num_classes: 1
+        in_chans: 1
+        drop_path_rate: 0.2
+    tta: true
+    label_smoothing: 0.1
+data:
+  class_path: opendiagnostics.data.CSVImageDataModule
+  init_args:
+    manifest: data/pu2756/manifest.csv
+    split: predefined
+    split_column: fold0
+    class_names: [benign, malignant]
+    image_mode: L
+    in_channels: 1
+    license: CC BY 4.0
+    citation: >-
+      Jiang T, Wang Q, Liang G, et al. A Pulmonary Ultrasound Dataset for Tumor Segmentation
+      and Classification. Scientific Data 13:1711, 2026. doi:10.1038/s41597-026-07715-0.
+      Data: figshare, doi:10.6084/m9.figshare.32672274.v1.
+    batch_size: 64
+    eval_batch_size: 256
+    num_workers: 8
+    train_transforms:
+      class_path: torchvision.transforms.v2.Compose
+      init_args:
+        transforms:
+        - class_path: torchvision.transforms.v2.RandomResizedCrop
+          init_args:
+            size: [224, 224]
+            scale: [0.7, 1.0]
+            antialias: true
+        - class_path: torchvision.transforms.v2.RandomHorizontalFlip
+        - class_path: torchvision.transforms.v2.Normalize
+          init_args:
+            mean: [0.449]
+            std: [0.226]
+    eval_transforms:
+      class_path: torchvision.transforms.v2.Compose
+      init_args:
+        transforms:
+        - class_path: torchvision.transforms.v2.Resize
+          init_args:
+            size: [224, 224]
+            antialias: true
+        - class_path: torchvision.transforms.v2.Normalize
+          init_args:
+            mean: [0.449]
+            std: [0.226]
+optimizer:
+  class_path: torch.optim.AdamW
+  init_args:
+    lr: 0.0001
+    weight_decay: 0.05
+lr_scheduler:
+  class_path: torch.optim.lr_scheduler.CosineAnnealingLR
+  init_args:
+    T_max: 40
+    eta_min: 1.0e-06
+checkpoint:
+  monitor: val/auroc
+  mode: max
+eval:
+  bootstrap_samples: 1000

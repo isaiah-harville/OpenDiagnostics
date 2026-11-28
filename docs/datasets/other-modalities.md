@@ -486,6 +486,31 @@ Kaggle pages render with JavaScript. Kaggle rules were read in a real browser fr
 
 ---
 
+## Ultrasound
+
+### PU2756 (Pulmonary Ultrasound)
+
+- **Name and maintainer:** Jiang T, Wang Q, Liang G, et al., The First Affiliated Hospital of Guangzhou Medical University, hosted on figshare: https://doi.org/10.6084/m9.figshare.32672274
+- **Tasks and labels:**
+    - Benign vs malignant classification of peripheral pulmonary lesions, confirmed by percutaneous biopsy.
+    - One lesion mask per image.
+- **Label format:** `five_fold_split.xlsx`, with a test and a train sheet for each official fold, plus age band, sex and detailed pathology.
+- **Size:**
+    - 2,756 B-mode PNG images, one per patient: 1,755 malignant, 1,001 benign. The images zip is 830 MB.
+    - **Patient IDs are present** (`Examination Serial Number`, also the image folder name).
+- **License and access:**
+    - **CC BY 4.0** for the data (figshare). The paper is CC BY-NC-ND 4.0.
+    - Access is **open**.
+- **Image format:** RGB PNG of varying size (the paper's Table 1 summarises them), from Esaote MyLab90 and Hitachi 850 scanners with convex probes. The content is grayscale with tinted overlays.
+- **Citations:**
+    - Jiang T, et al. "A Pulmonary Ultrasound Dataset for Tumor Segmentation and Classification." *Sci Data* 13:1711 (2026). doi:10.1038/s41597-026-07715-0
+- **Pitfall:**
+    - The five official folds have no validation set; carve one from each fold's train patients.
+    - Every image shows a lesion, so there are no normal scans.
+    - Images keep the scanners' on-screen text.
+
+---
+
 ## Benchmarks
 
 ### MedMNIST v2 / MedMNIST+
