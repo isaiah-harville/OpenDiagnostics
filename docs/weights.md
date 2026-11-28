@@ -90,5 +90,12 @@ demo serve that run again.
 deletes a stored checkpoint. To remove one, delete the object with the publisher key
 (`aws s3 rm s3://opendiagnostics-weights/<project>/<run-id>/checkpoint.ckpt` with the
 variables above), then remove its `url` from `artifacts.yaml`. If the demo serves that run,
-first remove the project from `catalog.json` or publish another run for it; the demo skips a
-cataloged run whose checkpoint it cannot download.
+first retire the project or publish another run for it; the demo skips a cataloged run whose
+checkpoint it cannot download.
+
+## Retire
+
+`opendiagnostics retire <project>` takes a project off the demo by removing it from
+`catalog.json`, with the same publisher key as `publish`. Its checkpoints and bundles stay in
+the bucket, and publishing a run for it again puts it back. The demo drops it at its next
+catalog check, within ten minutes.

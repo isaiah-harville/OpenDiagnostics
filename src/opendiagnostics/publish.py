@@ -184,6 +184,27 @@ def _publish_demo(bucket: Bucket, target: Path, project: str) -> None:
         bucket.put(listing, CATALOG)
 
 
+def retire(project: str, bucket: Bucket | None = None) -> str:
+    """Take ``project`` off the demo by removing it from ``catalog.json``.
+
+    Its checkpoints and bundles stay in the bucket, so publishing a run for it again restores it.
+    Returns the run the demo served.
+    """
+    bucket = bucket or S3Bucket()
+    current = bucket.get(CATALOG)
+    catalog = json.loads(current) if current else {"models": {}}
+    if project not in catalog["models"]:
+        listed = ", ".join(catalog["models"]) or "none"
+        raise PublishError(f"{project} is not in {CATALOG}; the demo serves: {listed}")
+    run = catalog["models"].pop(project)
+    catalog.get("bundles", {}).pop(project, None)
+    with tempfile.TemporaryDirectory() as scratch:
+        listing = Path(scratch) / CATALOG
+        listing.write_text(json.dumps(catalog, indent=2) + "\n")
+        bucket.put(listing, CATALOG)
+    return run
+
+
 def _license_allows_sharing(run_dir: Path) -> bool:
     record = json.loads((run_dir / "run.json").read_text())
     return record.get("dataset", {}).get("license") in OPEN_LICENSES

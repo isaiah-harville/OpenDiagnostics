@@ -78,6 +78,14 @@ def _publish(args: argparse.Namespace) -> int:
     return 0
 
 
+def _retire(args: argparse.Namespace) -> int:
+    from opendiagnostics.publish import retire
+
+    run = retire(args.project)
+    print(f"{args.project} is off the demo; it served {run}, which stays in the bucket")
+    return 0
+
+
 def _notebook(args: argparse.Namespace) -> int:
     from opendiagnostics.notebook import build_notebook
 
@@ -155,6 +163,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     publish.add_argument("--allow-dirty", action="store_true", help="publish a dirty-tree run")
     publish.set_defaults(handler=_publish)
+
+    retire = sub.add_parser(
+        "retire", help="take a model project off the demo; its weights stay in the bucket"
+    )
+    retire.add_argument("project", help="project name in catalog.json, e.g. dermamnist-convnext")
+    retire.set_defaults(handler=_retire)
 
     prepare = sub.add_parser("prepare", help="download and unpack a config's dataset, no training")
     prepare.add_argument("-c", "--config", required=True, type=Path)

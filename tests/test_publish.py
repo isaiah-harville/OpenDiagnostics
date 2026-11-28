@@ -11,7 +11,7 @@ from conftest import MemoryBucket
 
 from opendiagnostics import publish
 from opendiagnostics.cli import main
-from opendiagnostics.publish import WEIGHTS_URL, PublishError, publish_run
+from opendiagnostics.publish import WEIGHTS_URL, PublishError, publish_run, retire
 
 
 @pytest.fixture
@@ -200,3 +200,23 @@ def test_only_the_checkpoint_is_checked_at_its_public_url(
     )
     publish_run(finished_run, project)
     assert checked == [f"{WEIGHTS_URL}/{project.name}/{finished_run.name}/checkpoint.ckpt"]
+
+
+def test_retire_takes_a_project_off_the_demo_and_keeps_its_files(finished_run, project, bucket):
+    bucket.objects["catalog.json"] = json.dumps({"models": {"other-project": "r1"}}).encode()
+    publish_run(finished_run, project, bucket=bucket)
+    stored = {k for k in bucket.objects if k != "catalog.json"}
+    assert retire(project.name, bucket=bucket) == finished_run.name
+    catalog = json.loads(bucket.objects["catalog.json"])
+    assert catalog["models"] == {"other-project": "r1"}
+    assert project.name not in catalog["bundles"]
+    assert stored <= set(bucket.objects)
+    publish_run(finished_run, project, bucket=bucket)
+    assert json.loads(bucket.objects["catalog.json"])["models"][project.name] == finished_run.name
+
+
+def test_retiring_a_project_the_demo_does_not_serve_is_an_error(bucket):
+    bucket.objects["catalog.json"] = json.dumps({"models": {"other-project": "r1"}}).encode()
+    with pytest.raises(PublishError, match="the demo serves: other-project"):
+        retire("missing-project", bucket=bucket)
+    assert json.loads(bucket.objects["catalog.json"]) == {"models": {"other-project": "r1"}}
