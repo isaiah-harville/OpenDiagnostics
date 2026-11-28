@@ -1,0 +1,50 @@
+{
+  "name": "kermany-oct-convnext",
+  "seed": 0,
+  "deterministic": "warn",
+  "git": {
+    "commit": "c8441937d0c4ede094443de97ebae06b054f99f0",
+    "branch": "main",
+    "dirty": false
+  },
+  "environment": {
+    "python": "3.12.16",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "machine": "AMD64",
+    "packages": {
+      "opendiagnostics": "0.1.0",
+      "torch": "2.15.0+cu132",
+      "torchvision": "0.29.2+cu132",
+      "lightning": "2.6.6",
+      "torchmetrics": "1.9.0",
+      "timm": "1.0.31",
+      "monai": "1.6.2",
+      "medmnist": "3.0.2",
+      "numpy": "2.5.5"
+    },
+    "cuda_available": true,
+    "cuda_version": "13.2",
+    "gpu": "NVIDIA GeForce RTX 4070 Ti",
+    "mps_available": false
+  },
+  "device": "cuda:0",
+  "command": [
+    "opendiagnostics",
+    "fit",
+    "-c",
+    "models/kermany-oct-convnext/config.yaml"
+  ],
+  "dataset": {
+    "name": "CSVImageDataModule",
+    "license": "CC BY 4.0",
+    "citation": "Kermany DS, Goldbaum M, Cai W, et al. Identifying Medical Diagnoses and Treatable Diseases by Image-Based Deep Learning. Cell 172(5):1122-1131.e9, 2018. doi:10.1016/j.cell.2018.02.010. Data: Kermany D, Zhang K, Goldbaum M, Mendeley Data v3, doi:10.17632/rscbjbr9sj.3.",
+    "patient_ids_available": true,
+    "fingerprint": {
+      "manifest": "data\\kermany_oct\\manifest.csv",
+      "rows": 109309
+    }
+  },
+  "parameters": 49454692,
+  "started": "2026-11-28T15:20:32+00:00",
+  "finished": "2026-11-28T18:24:54+00:00"
+}

@@ -1,0 +1,217 @@
+# lightning.pytorch==2.6.6
+seed_everything: 0
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: auto
+  num_nodes: 1
+  precision: bf16-mixed
+  logger: null
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.EMAWeightAveraging
+    init_args:
+      device: null
+      use_buffers: true
+      decay: 0.99934
+      update_every_n_steps: 1
+      update_starting_at_step: null
+      update_starting_at_epoch: null
+      multi_avg_fn: null
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch
+      log_momentum: false
+      log_weight_decay: false
+  fast_dev_run: false
+  max_epochs: 10
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: 0
+  log_every_n_steps: 50
+  enable_checkpointing: null
+  enable_progress_bar: null
+  enable_model_summary: null
+  accumulate_grad_batches: 4
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: warn
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: null
+  enable_autolog_hparams: true
+  model_registry: null
+model:
+  class_path: opendiagnostics.modules.ImageClassifier
+  init_args:
+    network:
+      class_path: timm.create_model
+      init_args:
+        model_name: convnext_small.fb_in22k_ft_in1k
+        pretrained: true
+        pretrained_cfg: null
+        pretrained_cfg_overlay: null
+        checkpoint_path: null
+        cache_dir: null
+        scriptable: null
+        exportable: null
+        no_jit: null
+      dict_kwargs:
+        num_classes: 4
+        in_chans: 1
+        drop_path_rate: 0.2
+    threshold: youden
+    label_smoothing: 0.1
+    pos_weight: null
+    class_weight: null
+    tta: true
+    calibration_bins: 15
+data:
+  class_path: opendiagnostics.data.CSVImageDataModule
+  init_args:
+    manifest: data/kermany_oct/manifest.csv
+    image_column: path
+    label_column: label
+    patient_column: patient_id
+    split_column: split
+    class_names:
+    - CNV
+    - DME
+    - DRUSEN
+    - NORMAL
+    label_separator: null
+    image_mode: L
+    in_channels: 1
+    license: CC BY 4.0
+    citation: 'Kermany DS, Goldbaum M, Cai W, et al. Identifying Medical Diagnoses
+      and Treatable Diseases by Image-Based Deep Learning. Cell 172(5):1122-1131.e9,
+      2018. doi:10.1016/j.cell.2018.02.010. Data: Kermany D, Zhang K, Goldbaum M,
+      Mendeley Data v3, doi:10.17632/rscbjbr9sj.3.'
+    split: kfold
+    fractions:
+    - 0.7
+    - 0.15
+    - 0.15
+    folds: 10
+    fold: 0
+    stratify: true
+    split_seed: 0
+    train_transforms:
+      class_path: torchvision.transforms.v2.Compose
+      init_args:
+        transforms:
+        - class_path: torchvision.transforms.v2.RandomResizedCrop
+          init_args:
+            size:
+            - 448
+            - 448
+            scale:
+            - 0.7
+            - 1.0
+            ratio:
+            - 0.75
+            - 1.3333333333333333
+            interpolation: bilinear
+            antialias: true
+        - class_path: torchvision.transforms.v2.RandomHorizontalFlip
+          init_args:
+            p: 0.5
+        - class_path: torchvision.transforms.v2.RandomVerticalFlip
+          init_args:
+            p: 0.5
+        - class_path: torchvision.transforms.v2.Normalize
+          init_args:
+            mean:
+            - 0.449
+            std:
+            - 0.226
+            inplace: false
+    eval_transforms:
+      class_path: torchvision.transforms.v2.Compose
+      init_args:
+        transforms:
+        - class_path: torchvision.transforms.v2.Resize
+          init_args:
+            size:
+            - 448
+            - 448
+            interpolation: bilinear
+            max_size: null
+            antialias: true
+        - class_path: torchvision.transforms.v2.Normalize
+          init_args:
+            mean:
+            - 0.449
+            std:
+            - 0.226
+            inplace: false
+    batch_size: 16
+    eval_batch_size: 64
+    num_workers: 8
+name: kermany-oct-convnext
+output_dir: runs
+notes: ConvNeXt-S at 448 px on the official 1,000-image test folder. Validation is
+  fold 0 of 10 patient-grouped, label-stratified folds of the official training folder.
+  Checkpoints are chosen on validation accuracy, the benchmark's metric. Batches of
+  16, four accumulated per step (64).
+eval:
+  bootstrap_samples: 1000
+  confidence: 0.95
+  bootstrap_unit: patient
+  splits:
+  - val
+  - test
+checkpoint:
+  dirpath: null
+  filename: checkpoint
+  monitor: val/accuracy
+  verbose: false
+  save_last: null
+  save_top_k: 1
+  save_on_exception: false
+  save_weights_only: true
+  mode: max
+  auto_insert_metric_name: false
+  every_n_train_steps: null
+  train_time_interval: null
+  every_n_epochs: null
+  save_on_train_epoch_end: null
+  enable_version_counter: false
+optimizer:
+  class_path: torch.optim.AdamW
+  init_args:
+    lr: 0.0001
+    betas:
+    - 0.9
+    - 0.999
+    eps: 1.0e-08
+    weight_decay: 0.05
+    amsgrad: false
+    maximize: false
+    foreach: null
+    capturable: false
+    differentiable: false
+    fused: null
+lr_scheduler:
+  class_path: torch.optim.lr_scheduler.CosineAnnealingLR
+  init_args:
+    T_max: 10
+    eta_min: 1.0e-06
+    last_epoch: -1
+ckpt_path: null
+weights_only: null

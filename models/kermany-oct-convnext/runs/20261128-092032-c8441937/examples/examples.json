@@ -1,0 +1,82 @@
+[
+  {
+    "id": "test/CNV/CNV-5898110-1.jpeg",
+    "input": "01-input.png",
+    "overlay": "01-attribution.png",
+    "kind": "attribution",
+    "truth": "CNV",
+    "prediction": "CNV",
+    "confidence": 0.9386073350906372,
+    "correct": true
+  },
+  {
+    "id": "test/DME/DME-6486712-3.jpeg",
+    "input": "02-input.png",
+    "overlay": "02-attribution.png",
+    "kind": "attribution",
+    "truth": "DME",
+    "prediction": "DME",
+    "confidence": 0.941603422164917,
+    "correct": true
+  },
+  {
+    "id": "test/DRUSEN/DRUSEN-2099732-4.jpeg",
+    "input": "03-input.png",
+    "overlay": "03-attribution.png",
+    "kind": "attribution",
+    "truth": "DRUSEN",
+    "prediction": "DRUSEN",
+    "confidence": 0.9398338794708252,
+    "correct": true
+  },
+  {
+    "id": "test/NORMAL/NORMAL-3068439-1.jpeg",
+    "input": "04-input.png",
+    "overlay": "04-attribution.png",
+    "kind": "attribution",
+    "truth": "NORMAL",
+    "prediction": "NORMAL",
+    "confidence": 0.9353264570236206,
+    "correct": true
+  },
+  {
+    "id": "test/CNV/CNV-738589-2.jpeg",
+    "input": "05-input.png",
+    "overlay": "05-attribution.png",
+    "kind": "attribution",
+    "truth": "CNV",
+    "prediction": "CNV",
+    "confidence": 0.9349550008773804,
+    "correct": true
+  },
+  {
+    "id": "test/DME/DME-690653-1.jpeg",
+    "input": "06-input.png",
+    "overlay": "06-attribution.png",
+    "kind": "attribution",
+    "truth": "DME",
+    "prediction": "DME",
+    "confidence": 0.945306658744812,
+    "correct": true
+  },
+  {
+    "id": "test/DRUSEN/DRUSEN-11129-4.jpeg",
+    "input": "07-input.png",
+    "overlay": "07-attribution.png",
+    "kind": "attribution",
+    "truth": "DRUSEN",
+    "prediction": "DRUSEN",
+    "confidence": 0.5199185013771057,
+    "correct": true
+  },
+  {
+    "id": "test/NORMAL/NORMAL-4376025-2.jpeg",
+    "input": "08-input.png",
+    "overlay": "08-attribution.png",
+    "kind": "attribution",
+    "truth": "NORMAL",
+    "prediction": "NORMAL",
+    "confidence": 0.936109185218811,
+    "correct": true
+  }
+]
