@@ -173,3 +173,16 @@ in Nickparvar's own test split.
 - Only a sample of each sheet was reviewed by eye, not all 600 pairs at corr >= 0.99.
 - The figshare and Mendeley zips differ in MD5; only the Mendeley copy was audited.
 - No fine-tuned model was trained.
+
+## Prior work: no paper
+
+Checked on 2026-11-28. Others had already published or submitted this finding, so we are not writing a paper.
+
+- **Alhawat et al.**, "Toward Reliable Evaluation of Brain Tumor AI: Hidden Train-Test Overlap in the BRISC 2025 MRI Benchmark", submitted to *Brain Sciences*. Code: https://github.com/MarwanHawat/brisc2025-overlap-audit. They used mirror-aware hashing and matched images to Cheng's patient IDs. Results: 537 of 1,000 test images have a copy in train, and 654 of 656 traced test images share a patient with train. That matches ours.
+- **"Validation Is Not Enough"**, *Information* 17(11):1175, 2026: 104 pixel-identical train/test images.
+- **Nasir Uddin et al.**, *J Imaging Inform Med* 2026, doi 10.1007/s10278-026-02489-8: 24.8% of BRISC test images leak.
+- **Huang et al.**, *Front Med* 13:1955863, 2026: pHash links 1,174 train images to test.
+- **MASOUD-AJUMS/brisc-shortcut-audit**: 49.8% of test images share a patient with train, using pseudo-patients.
+- **Vangala et al.**, arXiv 2610.00421: audits Nickparvar and SARTAJ, not BRISC.
+
+The checks above confirm those findings independently.
