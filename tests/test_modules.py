@@ -65,6 +65,14 @@ def test_class_weight_weights_the_multiclass_loss():
     assert model.training_step(batch, 0).item() == pytest.approx(expected.item())
 
 
+def test_label_smoothing_pulls_binary_targets_toward_one_half():
+    model = _classifier("binary", ["benign", "malignant"], label_smoothing=0.2)
+    batch = _batch(torch.tensor([0, 1, 1, 0, 1, 0]))
+    smoothed = batch["target"].float().reshape(-1, 1) * 0.8 + 0.1
+    expected = nn.functional.binary_cross_entropy_with_logits(model(batch["image"]), smoothed)
+    assert model.training_step(batch, 0).item() == pytest.approx(expected.item())
+
+
 @pytest.mark.parametrize(
     ("mode", "names", "weights"),
     [("multiclass", ["a", "b", "c"], [1.0, 2.0]), ("binary", ["no", "yes"], [1.0, 2.0])],

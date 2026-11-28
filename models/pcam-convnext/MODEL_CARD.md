@@ -38,7 +38,10 @@ slides, other scanners, other stains or other tissues.
 ## Training
 Config: `config.yaml`. ConvNeXt-Small (`convnext_small.fb_in22k_ft_in1k`, ImageNet-22k
 pretrained), bf16 mixed precision, 8 epochs, batch size 64, AdamW with a cosine schedule,
-weight EMA, label smoothing 0.1. Patches are upsampled from 96 to 224 px, the resolution the
+weight EMA. The config sets label smoothing 0.1, but the binary loss ignored it until
+`fix(modules): apply label smoothing to binary and multilabel losses`, so the published run
+`20261127-054546-b1597946` trained without smoothing. A rerun on a later commit applies it.
+Patches are upsampled from 96 to 224 px, the resolution the
 weights were trained at; at 96 px the last stage sees a 3x3 feature map. Augmentation is a
 random 90-degree rotation and a horizontal flip, which together cover all eight symmetries of
 the square and keep the centre region in place. Evaluation averages the patch and its

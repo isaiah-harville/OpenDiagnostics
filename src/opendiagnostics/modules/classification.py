@@ -75,9 +75,10 @@ class ImageClassifier(DiagnosticModule):
             )
         else:
             weight = None if self.pos_weight is None else logits.new_tensor(self.pos_weight)
+            smoothed = target.float() * (1 - self.label_smoothing) + self.label_smoothing / 2
             loss = nn.functional.binary_cross_entropy_with_logits(
                 logits.reshape(target.shape[0], -1),
-                target.float().reshape(target.shape[0], -1),
+                smoothed.reshape(target.shape[0], -1),
                 pos_weight=weight,
             )
         self.log("train/loss", loss, on_step=False, on_epoch=True, batch_size=target.shape[0])
