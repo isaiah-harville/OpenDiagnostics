@@ -1,0 +1,74 @@
+{
+  "threshold": 0.95,
+  "margin": 0.02,
+  "tumor_images": {
+    "train": 3933,
+    "test": 860
+  },
+  "no_tumor_null_correlation": {
+    "max": 0.9088,
+    "q99": 0.8852,
+    "median": 0.71,
+    "at_or_above_threshold": 0
+  },
+  "tumor_correlation_quantiles": {
+    "0.05": 0.8121,
+    "0.25": 0.9973,
+    "0.5": 0.999
+  },
+  "confident": {
+    "train": 3619,
+    "test": 714
+  },
+  "confident_by_class": {
+    "test/glioma": 239,
+    "test/meningioma": 180,
+    "test/pituitary": 295,
+    "train/glioma": 1069,
+    "train/meningioma": 1160,
+    "train/pituitary": 1390
+  },
+  "confident_label_agrees_with_cheng": 4330,
+  "confident_embed_same_patient": 4325,
+  "cheng_patients": 233,
+  "patients": {
+    "train": 228,
+    "test": 202
+  },
+  "patients_in_train_and_test": 202,
+  "test_images_from_shared_patients": 714,
+  "test_images_from_shared_patients_by_class": {
+    "glioma": 239,
+    "meningioma": 180,
+    "pituitary": 295
+  },
+  "test_images_whose_cheng_slice_is_in_train": 453,
+  "confident_margin_quantiles": {
+    "0.01": 0.0476,
+    "0.1": 0.0964,
+    "0.5": 0.1718
+  },
+  "confident_label_disagreements": [
+    {
+      "id": "brisc2025_test_00826_pi_co_t1",
+      "label": "pituitary",
+      "cheng_id": "cheng_0229",
+      "cheng_label": "meningioma"
+    },
+    {
+      "id": "brisc2025_train_03595_pi_ax_t1",
+      "label": "pituitary",
+      "cheng_id": "cheng_0035",
+      "cheng_label": "meningioma"
+    },
+    {
+      "id": "brisc2025_train_04180_pi_co_t1",
+      "label": "pituitary",
+      "cheng_id": "cheng_0230",
+      "cheng_label": "meningioma"
+    }
+  ],
+  "cheng_slices_matched": 2742,
+  "cheng_slices_matched_more_than_once": 1544,
+  "cheng_slices_matched_in_both_splits": 449
+}

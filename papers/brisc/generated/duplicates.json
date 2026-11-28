@@ -1,0 +1,272 @@
+{
+  "images": {
+    "test/glioma": 254,
+    "test/meningioma": 306,
+    "test/no_tumor": 140,
+    "test/pituitary": 300,
+    "train/glioma": 1147,
+    "train/meningioma": 1329,
+    "train/no_tumor": 1067,
+    "train/pituitary": 1457
+  },
+  "images_by_plane": {
+    "test/ax": 398,
+    "test/co": 305,
+    "test/sa": 297,
+    "train/ax": 1595,
+    "train/co": 1676,
+    "train/sa": 1729
+  },
+  "label_matches_folder": true,
+  "exact_pixels": {
+    "duplicate_groups": 134,
+    "images_in_groups": 278,
+    "pairs_with_different_plane_tags": 13,
+    "pairs": {
+      "train-train": 41,
+      "train-test": 110,
+      "test-test": 8
+    },
+    "cross_pairs_label_disagrees": 0,
+    "test_images_with_train_partner": 101,
+    "test_images_with_train_partner_by_class": {
+      "glioma": 0,
+      "meningioma": 96,
+      "no_tumor": 0,
+      "pituitary": 5
+    },
+    "train_images_with_test_partner": 104,
+    "images_in_any_pair": 278
+  },
+  "exact_file_bytes": {
+    "duplicate_groups": 46,
+    "images_in_groups": 96,
+    "pairs_with_different_plane_tags": 13,
+    "pairs": {
+      "train-train": 41,
+      "train-test": 9,
+      "test-test": 5
+    },
+    "cross_pairs_label_disagrees": 0,
+    "test_images_with_train_partner": 7,
+    "test_images_with_train_partner_by_class": {
+      "glioma": 0,
+      "meningioma": 2,
+      "no_tumor": 0,
+      "pituitary": 5
+    },
+    "train_images_with_test_partner": 9,
+    "images_in_any_pair": 96
+  },
+  "thumb_corr": {
+    "0.99": {
+      "pairs": {
+        "train-train": 1149,
+        "train-test": 600,
+        "test-test": 60
+      },
+      "cross_pairs_label_disagrees": 0,
+      "test_images_with_train_partner": 542,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 66,
+        "meningioma": 269,
+        "no_tumor": 1,
+        "pituitary": 206
+      },
+      "train_images_with_test_partner": 556,
+      "images_in_any_pair": 3351
+    },
+    "0.97": {
+      "pairs": {
+        "train-train": 1317,
+        "train-test": 656,
+        "test-test": 66
+      },
+      "cross_pairs_label_disagrees": 0,
+      "test_images_with_train_partner": 566,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 76,
+        "meningioma": 271,
+        "no_tumor": 4,
+        "pituitary": 215
+      },
+      "train_images_with_test_partner": 606,
+      "images_in_any_pair": 3543
+    },
+    "0.95": {
+      "pairs": {
+        "train-train": 2076,
+        "train-test": 1050,
+        "test-test": 99
+      },
+      "cross_pairs_label_disagrees": 0,
+      "test_images_with_train_partner": 631,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 93,
+        "meningioma": 274,
+        "no_tumor": 20,
+        "pituitary": 244
+      },
+      "train_images_with_test_partner": 911,
+      "images_in_any_pair": 3867
+    },
+    "0.9": {
+      "pairs": {
+        "train-train": 6559,
+        "train-test": 3024,
+        "test-test": 314
+      },
+      "cross_pairs_label_disagrees": 55,
+      "test_images_with_train_partner": 790,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 153,
+        "meningioma": 281,
+        "no_tumor": 69,
+        "pituitary": 287
+      },
+      "train_images_with_test_partner": 1922,
+      "images_in_any_pair": 4801
+    }
+  },
+  "phash_hamming": {
+    "0": {
+      "pairs": {
+        "train-train": 791,
+        "train-test": 448,
+        "test-test": 46
+      },
+      "cross_pairs_label_disagrees": 0,
+      "test_images_with_train_partner": 399,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 37,
+        "meningioma": 210,
+        "no_tumor": 0,
+        "pituitary": 152
+      },
+      "train_images_with_test_partner": 406,
+      "images_in_any_pair": 2345
+    },
+    "4": {
+      "pairs": {
+        "train-train": 2128,
+        "train-test": 935,
+        "test-test": 83
+      },
+      "cross_pairs_label_disagrees": 3,
+      "test_images_with_train_partner": 596,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 82,
+        "meningioma": 276,
+        "no_tumor": 6,
+        "pituitary": 232
+      },
+      "train_images_with_test_partner": 859,
+      "images_in_any_pair": 3731
+    },
+    "8": {
+      "pairs": {
+        "train-train": 9075,
+        "train-test": 3873,
+        "test-test": 333
+      },
+      "cross_pairs_label_disagrees": 532,
+      "test_images_with_train_partner": 795,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 195,
+        "meningioma": 283,
+        "no_tumor": 38,
+        "pituitary": 279
+      },
+      "train_images_with_test_partner": 2019,
+      "images_in_any_pair": 4881
+    },
+    "12": {
+      "pairs": {
+        "train-train": 67481,
+        "train-test": 27330,
+        "test-test": 2586
+      },
+      "cross_pairs_label_disagrees": 10137,
+      "test_images_with_train_partner": 961,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 249,
+        "meningioma": 298,
+        "no_tumor": 115,
+        "pituitary": 299
+      },
+      "train_images_with_test_partner": 4015,
+      "images_in_any_pair": 5818
+    }
+  },
+  "embed_cosine": {
+    "0.98": {
+      "pairs": {
+        "train-train": 1323,
+        "train-test": 574,
+        "test-test": 54
+      },
+      "cross_pairs_label_disagrees": 0,
+      "test_images_with_train_partner": 493,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 62,
+        "meningioma": 235,
+        "no_tumor": 19,
+        "pituitary": 177
+      },
+      "train_images_with_test_partner": 534,
+      "images_in_any_pair": 3066
+    },
+    "0.95": {
+      "pairs": {
+        "train-train": 8268,
+        "train-test": 3307,
+        "test-test": 332
+      },
+      "cross_pairs_label_disagrees": 261,
+      "test_images_with_train_partner": 805,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 171,
+        "meningioma": 288,
+        "no_tumor": 57,
+        "pituitary": 289
+      },
+      "train_images_with_test_partner": 1880,
+      "images_in_any_pair": 5013
+    },
+    "0.9": {
+      "pairs": {
+        "train-train": 389026,
+        "train-test": 157122,
+        "test-test": 16741
+      },
+      "cross_pairs_label_disagrees": 66964,
+      "test_images_with_train_partner": 968,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 250,
+        "meningioma": 296,
+        "no_tumor": 122,
+        "pituitary": 300
+      },
+      "train_images_with_test_partner": 4481,
+      "images_in_any_pair": 5881
+    },
+    "0.85": {
+      "pairs": {
+        "train-train": 1873995,
+        "train-test": 762895,
+        "test-test": 79844
+      },
+      "cross_pairs_label_disagrees": 438370,
+      "test_images_with_train_partner": 998,
+      "test_images_with_train_partner_by_class": {
+        "glioma": 254,
+        "meningioma": 304,
+        "no_tumor": 140,
+        "pituitary": 300
+      },
+      "train_images_with_test_partner": 4890,
+      "images_in_any_pair": 5988
+    }
+  },
+  "cross_pairs_at_loosest_thresholds": 771469
+}
